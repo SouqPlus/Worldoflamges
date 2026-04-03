@@ -32,7 +32,18 @@
         }
         h1 { font-size: 1.4rem; color: var(--primary-gold); margin: 0; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; }
         .spacer { height: var(--header-h); }
-        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 1000px; margin: 15px auto; padding: 0 12px 60px; }
+        
+        /* تنسيق حاوية الإعلان لضمان عدم تداخلها مع التصميم */
+        .ad-container {
+            width: 100%;
+            margin: 20px auto;
+            padding: 0 12px;
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; max-width: 1000px; margin: 0 auto; padding: 0 12px 60px; }
         .img-card { position: relative; overflow: hidden; border-radius: 18px; background: #e9e9e2; aspect-ratio: 3/4; box-shadow: 0 5px 15px rgba(0,0,0,0.04); opacity: 0; transform: translateY(15px); }
         .img-card.reveal { opacity: 1; transform: translateY(0); }
         .img-card img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; display: block; }
@@ -57,6 +68,17 @@
 
 <header><h1>World of Images</h1></header>
 <div class="spacer"></div>
+
+<!-- بداية قسم الإعلانات المدمج -->
+<div class="ad-container">
+    <!-- BEGIN AADS AD UNIT 2432878 -->
+    <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 999;">
+        <iframe data-aa='2432878' src='//acceptable.a-ads.com/2432878/?size=Adaptive' 
+                style='border:0; padding:0; width:100%; max-width:728px; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+    <!-- END AADS AD UNIT 2432878 -->
+</div>
+<!-- نهاية قسم الإعلانات -->
 
 <div class="gallery" id="gallery"></div>
 <div id="loader" class="loader-container"><div class="spinner"></div></div>
@@ -113,7 +135,6 @@ function closePreview() {
     document.body.style.overflow = 'auto';
 }
 
-// 🔹 تحميل الصور على كل الأجهزة (iOS / Android / Desktop)
 async function downloadImg() {
     const btn = document.querySelector('.btn-download');
     btn.innerText = "جاري الحفظ...";
@@ -122,7 +143,6 @@ async function downloadImg() {
         const blob = await res.blob();
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (isIOS) {
-            // على iOS افتح الصورة في تبويب جديد ليتمكن المستخدم من حفظها
             const reader = new FileReader();
             reader.onload = () => {
                 const imgWindow = window.open(reader.result, '_blank');
@@ -130,7 +150,6 @@ async function downloadImg() {
             };
             reader.readAsDataURL(blob);
         } else {
-            // باقي الأجهزة
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
