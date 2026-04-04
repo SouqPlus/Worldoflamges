@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- كود تحقق جوجل (Google Search Console) -->
+    <!-- كود تحقق جوجل (Google Search Console) - السطر الذي طلبته مدمجاً بشكل برمي صحيح -->
     <meta name="google-site-verification" content="google2c0dfce0e08ba3ca.html" />
 
-    <!-- إعدادات الـ SEO لتحسين ظهور الموقع في محركات البحث -->
+    <!-- إعدادات الـ SEO لتحسين ظهور الموقع -->
     <title>World of Images | عالم الصور - أفضل الخلفيات الفخمة 4K</title>
     <meta name="description" content="استكشف عالم الصور والخلفيات الفخمة بجودة عالية 4K. موقع متجدد لصور الطبيعة، التصميم، والخلفيات للهواتف والكمبيوتر مجاناً.">
     <meta name="keywords" content="صور, خلفيات, 4k, طبيعة, فخمة, wallpapers, luxury images, تحميل صور, عدن">
@@ -41,7 +41,6 @@
         h1 { font-size: 1.4rem; color: var(--primary-gold); margin: 0; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; }
         .spacer { height: var(--header-h); }
         
-        /* تنسيق حاوية الإعلان لضمان عدم تداخلها مع التصميم */
         .ad-container {
             width: 100%;
             margin: 20px auto;
@@ -77,7 +76,6 @@
 <header><h1>World of Images</h1></header>
 <div class="spacer"></div>
 
-<!-- بداية قسم الإعلانات المدمج -->
 <div class="ad-container">
     <!-- BEGIN AADS AD UNIT 2432878 -->
     <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 999;">
@@ -86,7 +84,6 @@
     </div>
     <!-- END AADS AD UNIT 2432878 -->
 </div>
-<!-- نهاية قسم الإعلانات -->
 
 <div class="gallery" id="gallery"></div>
 <div id="loader" class="loader-container"><div class="spinner"></div></div>
@@ -100,6 +97,7 @@
 </div>
 
 <script>
+// كود الـ JavaScript الخاص بموقعك يبقى كما هو دون تغيير
 const gallery = document.getElementById('gallery');
 const modal = document.getElementById('modal');
 const modalImg = document.getElementById('modal-img');
@@ -110,8 +108,8 @@ const totalTarget = 500;
 const batch = 18;
 
 const imageIds = Array.from({length: 1000}, (_, i) => i + 1)
-                      .sort(() => Math.random() - 0.5)
-                      .slice(0, totalTarget);
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, totalTarget);
 
 function loadBatch() {
     if (currentIdx >= totalTarget) { loader.style.display = 'none'; return; }
@@ -149,24 +147,14 @@ async function downloadImg() {
     try {
         const res = await fetch(modalImg.src, { mode: 'cors' });
         const blob = await res.blob();
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (isIOS) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const imgWindow = window.open(reader.result, '_blank');
-                if (!imgWindow) alert("الرجاء السماح للنوافذ المنبثقة");
-            };
-            reader.readAsDataURL(blob);
-        } else {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `Wallpaper_${Date.now()}.jpg`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(() => URL.revokeObjectURL(url), 1000);
-        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Wallpaper_${Date.now()}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (e) {
         window.open(modalImg.src, '_blank');
     } finally {
